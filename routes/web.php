@@ -44,6 +44,14 @@ Route::group(['prefix' => '/admin'], function(){
         Route::post('/savetaxonomy', '\App\Http\Controllers\TaxonomyController@save');
         Route::get('/taxonomy/{taxonomy_id}','\App\Http\Controllers\TaxonomyController@viewUser');
         Route::post('/taxonomy/delete', '\App\Http\Controllers\TaxonomyController@deleteUser');
+
+	//Products
+        Route::get('/products', '\App\Http\Controllers\ProductController@index')->name('products');
+        Route::get('/product-form/{product_id}', '\App\Http\Controllers\ProductController@addEditProduct');
+        Route::post('/saveproduct', '\App\Http\Controllers\ProductController@save');
+        Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
+        Route::post('/product/delete','\App\Http\Controllers\ProductController@deleteProduct');
+
 	});
 });
 

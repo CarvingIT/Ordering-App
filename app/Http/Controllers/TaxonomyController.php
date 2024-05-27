@@ -8,9 +8,14 @@ use Session;
 
 class TaxonomyController extends Controller
 {
-	public function index(){
+	public function index(Request $request){
         $taxonomies = Taxonomy::orderBy('label','ASC')->get();
-        return view('taxonomymanagement', ['taxonomies'=>$taxonomies, 'activePage'=>'Taxonomies','titlePage'=>'Taxonomies']);
+	if($request->is('api/*')){
+                return response()->json(['MessageType'=>1, 'taxonomies'=>$taxonomies], 200);
+        }
+        else{
+        	return view('taxonomymanagement', ['taxonomies'=>$taxonomies, 'activePage'=>'Taxonomies','titlePage'=>'Taxonomies']);
+	}
         }
 
         public function addEditTaxonomy($taxonomy_id, $parent_id=null){
@@ -39,10 +44,20 @@ class TaxonomyController extends Controller
         $e->parent_id = $request->input('parent_id');
         try{
             $e->save();
-            Session::flash('alert-success', 'Taxonomy saved successfully!');
+	    if($request->is('api/*')){
+                return response()->json(['MessageType'=>1, 'Message'=>'Taxonomy saved successfully'], 200);
+            }
+            else{
+                Session::flash('alert-success', 'Taxonomy saved successfully!');
+	    }
          }
          catch(\Exception $e){
-            Session::flash('alert-danger', $e->getMessage());
+	    if($request->is('api/*')){
+                return response()->json(['MessageType'=>0, 'Message'=>'Please try again', 'error'=>$e->getMessage()], 422);
+            }
+            else{
+            	Session::flash('alert-danger', $e->getMessage());
+	    }
          }
                 return redirect('/admin/taxonomies');
         }

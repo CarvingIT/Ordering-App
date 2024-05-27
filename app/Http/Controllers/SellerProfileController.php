@@ -9,10 +9,15 @@ use Session;
 
 class SellerProfileController extends Controller
 {
-	public function index(){
+	public function index(Request $request){
         $sellers = SellerProfile::all();
-        return view('sellermanagement', ['sellers'=>$sellers, 'activePage'=>'Users','titlePage'=>'Users']);
+	if($request->is('api/*')){
+        	return response()->json(['MessageType'=>1, 'sellers'=>$sellers], 200);
         }
+        else{
+        	return view('sellermanagement', ['sellers'=>$sellers, 'activePage'=>'Users','titlePage'=>'Users']);
+	}
+        }// function ends
 
 	public function addEditSellerProfile($seller_id){
         if($seller_id == 'new'){
@@ -47,10 +52,20 @@ class SellerProfileController extends Controller
          try{
             $u->save();
             $seller_id = $u->id;
-            Session::flash('alert-success', "Seller profile details saved successfully");
+	    if($request->is('api/*')){
+               return response()->json(['MessageType'=>1, 'Message'=>'Seller Profile details saved successfully'], 200);
+            }
+            else{
+            	Session::flash('alert-success', "Seller profile details saved successfully");
+	    }
          }
          catch(\Exception $e){
-            Session::flash('alert-danger', $e->getMessage());
+	    if($request->is('api/*')){
+                return response()->json(['MessageType'=>0, 'Message'=>'Please try again later', 'error'=>$e->getMessage()], 422);
+            }
+            else{
+            	Session::flash('alert-danger', $e->getMessage());
+	    }
          }
 	return redirect('/admin/sellerprofiles');
         }
@@ -59,7 +74,12 @@ class SellerProfileController extends Controller
         $seller = SellerProfile::where('id',$request->seller_id)
                 ->first();
 	$users = \App\Models\User::all();
-        return view('sellerdetails', ['seller'=>$seller, 'users'=>$users, 'activePage'=>'Seller','titlePage'=>'Seller']);
+	    if($request->is('api/*')){
+               return response()->json(['MessageType'=>1, 'seller'=>$seller, 'users'=>$users], 200);
+            }
+            else{
+        	return view('sellerdetails', ['seller'=>$seller, 'users'=>$users, 'activePage'=>'Seller','titlePage'=>'Seller']);
+	    }
         }
 
         public function deleteSeller(Request $request){

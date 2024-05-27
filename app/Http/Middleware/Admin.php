@@ -15,7 +15,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if(!$request->user() || (!$request->user()->hasRole('admin') && $request->user()->hasRole('seller'))){
+        if(!$request->user() || (!$request->user()->hasRole('admin'))){
 
             // Needs more work. Redirect user to a page that shows permission-denied message
             return redirect('/');
