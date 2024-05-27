@@ -24,11 +24,9 @@
                     <x-nav-link :href="route('taxonomies')" :active="request()->routeIs('taxonomies')">
                         {{ __('Taxonomies') }}
                     </x-nav-link>
-		{{--	
-                    <x-nav-link :href="route('productsmanagement')" :active="request()->routeIs('productsmanagement')">
+                    <x-nav-link :href="route('products')" :active="request()->routeIs('products')">
                         {{ __('Products') }}
                     </x-nav-link>
-		--}}
                 </div>
             </div>
 

@@ -9,4 +9,9 @@ class SellerProfile extends Model
 {
     use HasFactory;
 	protected $table='seller_profile';
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+	
 }

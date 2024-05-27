@@ -6,16 +6,17 @@ use Illuminate\Http\Request;
 use \App\Models\Taxonomy;
 use \App\Models\Product;
 use \App\Models\SellerProfile;
+use Session;
 
 class ProductController extends Controller
 {
 	public function index(Request $request){
-        $products = User::all();
+        $products = Product::all();
 	if($request->is('api/*')){
            	return response()->json(['MessageType'=>1, 'products'=>$products], 200);
         }
         else{
-        	return view('productmanagement', ['products'=>$products, 'activePage'=>'Products','titlePage'=>'Products']);
+        	return view('productsmanagement', ['products'=>$products, 'activePage'=>'Products','titlePage'=>'Products']);
 	}
         }// function ends
 
@@ -26,7 +27,9 @@ class ProductController extends Controller
         else{
             $product = Product::find($product_id);
         }
-        return view('product-form', ['product'=>$product, 'activePage'=>'Product', 'titlePage'=>'Product']);
+	$sellers = SellerProfile::all();
+	$taxonomies = Taxonomy::all();
+        return view('product-form', ['product'=>$product, 'sellers'=>$sellers, 'taxonomies'=>$taxonomies, 'activePage'=>'Product', 'titlePage'=>'Product']);
         }// function ends
 
 	public function save(Request $request){
@@ -69,18 +72,20 @@ class ProductController extends Controller
 
 	public function viewProduct(Request $request){
         	$product = Product::where('id',$request->product_id)->first();
+		$sellers = SellerProfile::all();
+		$taxonomies = Taxonomy::all();
 		if($request->is('api/*')){
-                	return response()->json(['MessageType'=>1, 'product'=>$product], 200);
+                	return response()->json(['MessageType'=>1, 'product'=>$product, 'sellers'=>$sellers, 'taxonomies'=>$taxonomies], 200);
         	}
         	else{
-        		return view('userdetails', ['product'=>$product, 'activePage'=>'Products','titlePage'=>'Products']);
+        		return view('productdetails', ['product'=>$product, 'sellers'=>$sellers, 'taxonomies'=>$taxonomies, 'activePage'=>'Products','titlePage'=>'Products']);
 		}
         }// function ends
 
         public function deleteProduct(Request $request){
         $product = Product::find($request->product_id);
           if(!empty($product)){
-                if($user->delete()){
+                if($product->delete()){
                 Session::flash('alert-success', 'Product deleted successfully!');
                 return redirect('/admin/products');
                 }
