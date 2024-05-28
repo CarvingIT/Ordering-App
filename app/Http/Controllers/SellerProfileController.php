@@ -83,11 +83,16 @@ class SellerProfileController extends Controller
         }
 
         public function deleteSeller(Request $request){
-        $user = SellerProfile::find($request->user_id);
-          if(!empty($user)){
-                if($user->delete()){
+        $seller = SellerProfile::find($request->seller_id);
+          if(!empty($seller)){
+                if($seller->delete()){
+	    if($request->is('api/*')){
+               return response()->json(['MessageType'=>1, 'Message'=>'Seller profile deleted successfully'], 200);
+            }
+            else{
                 Session::flash('alert-success', 'Seller profile deleted successfully!');
                 return redirect('/admin/sellerprofiles');
+	    }
                 }
           }
         }

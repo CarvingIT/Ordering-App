@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
 		$table->string('product_name')->nullable();
 		$table->longtext('description')->nullable();
 		$table->unsignedBigInteger('seller_id')->nullable();
-		$table->foreign('seller_id')->references('id')->on('seller_profile');
+		$table->foreign('seller_id')->references('id')->on('seller_profiles');
             	$table->timestamps();
         });
     }

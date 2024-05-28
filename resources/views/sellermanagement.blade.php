@@ -52,9 +52,9 @@ $(document).ready(function() {
 //
 });
 
-function showDeleteDialog(user_id){
+function showDeleteDialog(seller_id){
 
-$('#delete_user_id').val(user_id);
+$('#delete_seller_id').val(seller_id);
 $("#deletedialog").dialog({
 	title:'Are you sure?',
 	dialogClass: "alert"
@@ -121,9 +121,9 @@ $("#deletedialog").dialog({
 				@endif
 
 	    <div id="deletedialog" style="display:none;" class="bg-grey">
-                <form name="deletedoc" method="post" action="/admin/people/delete">
+                <form name="deleteseller" method="post" action="/admin/seller/delete">
                 @csrf
-                <input type="hidden" id="delete_user_id" name="user_id" value="{{ $u->id }}" />
+                <input type="hidden" id="delete_seller_id" name="seller_id" value="{{ $u->id }}" />
 			This action can not be undone.
 			<div class="flex items-center justify-end px-4 py-3 sm:px-6">
      			<button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled">Delete</button>

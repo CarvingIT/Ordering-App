@@ -21,8 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/user/register', '\App\Http\Controllers\UserController@register');
 Route::post('/user/get-token', '\App\Http\Controllers\UserController@login');
 
-Route::group(['middleware' => 'auth:sanctum','admin'], function(){
+Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('/user/assignrole', '\App\Http\Controllers\UserController@assignRole');
+        Route::get('/taxonomies', '\App\Http\Controllers\TaxonomyController@index');
+        Route::get('/products', '\App\Http\Controllers\ProductController@index');
+        Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
+        Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
+});
+
+
+Route::group(['middleware' => 'auth:sanctum','admin'], function(){
+        //Route::post('/user/assignrole', '\App\Http\Controllers\UserController@assignRole');
 
         //People/Users
         Route::get('/people', '\App\Http\Controllers\UserController@index');
@@ -35,21 +44,21 @@ Route::group(['middleware' => 'auth:sanctum','admin'], function(){
         Route::get('/sellerprofiles', '\App\Http\Controllers\SellerProfileController@index');
         Route::get('/seller-profile-form/{seller_id}', '\App\Http\Controllers\SellerProfileController@addEditSellerProfile');
         Route::post('/saveseller', '\App\Http\Controllers\SellerProfileController@save');
-        Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
+        //Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
         Route::post('/seller/delete', '\App\Http\Controllers\SellerProfileController@deleteSeller');
 
         //Taxonomies
-        Route::get('/taxonomies', '\App\Http\Controllers\TaxonomyController@index');
+        //Route::get('/taxonomies', '\App\Http\Controllers\TaxonomyController@index');
         Route::get('/taxonomy-form/{taxonomy_id}/{parent_id?}', '\App\Http\Controllers\TaxonomyController@addEditTaxonomy');
         Route::post('/savetaxonomy', '\App\Http\Controllers\TaxonomyController@save');
         Route::get('/taxonomy/{taxonomy_id}','\App\Http\Controllers\TaxonomyController@viewUser');
         Route::post('/taxonomy/delete', '\App\Http\Controllers\TaxonomyController@deleteUser');
 
         //Products
-        Route::get('/products', '\App\Http\Controllers\ProductController@index');
+        //Route::get('/products', '\App\Http\Controllers\ProductController@index');
         Route::get('/product-form/{product_id}', '\App\Http\Controllers\ProductController@addEditProduct');
         Route::post('/saveproduct', '\App\Http\Controllers\ProductController@save');
-        Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
+        //Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::post('/product/delete','\App\Http\Controllers\ProductController@deleteProduct');
 	
 });
