@@ -13,11 +13,12 @@ $(document).ready(function() {
 		stateSave: true,
         	"scrollX": true,
 		columnDefs: [
-                        { width: '25%', targets: 0 },
+                        { width: '15%', targets: 0 },
                         { width: '15%', targets: 1 },
                         { width: '15%', targets: 2 },
-                        { width: '30%', targets: 3 },
-			{ "orderable": false, targets: 4 }
+                        { width: '15%', targets: 3 },
+                        { width: '30%', targets: 4 },
+			{ "orderable": false, targets: 5 }
                 ],
                 "lengthMenu": [ 100, 500, 1000 ],
                 "pageLength": 100,
@@ -99,6 +100,7 @@ $("#deletedialog").dialog({
                     <table id="users" class="display">
 			<thead class="text-primary">
                             <tr>
+                            <th>Registered User</th>
                             <th>Business Name</th>
                             <th>Business Email</th>
                             <th>Business Phone</th>
@@ -109,6 +111,7 @@ $("#deletedialog").dialog({
                         <tbody>
                         @foreach ($sellers as $u)
                         <tr>
+                        <td>{{ $u->user->name }}</td>
                         <td>{{ $u->business_name }}</td>
                         <td>{{ $u->business_email }}</td>
                         <td>{{ $u->business_phone }}</td>
