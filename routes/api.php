@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth:sanctum','admin'], function(){
 	
 });
 
-Route:group(['middleware' => 'auth:sanctum','seller','admin'], function(){
+Route::group(['middleware' => 'auth:sanctum','seller','admin'], function(){
         //Sellers
         Route::get('/sellerprofiles', '\App\Http\Controllers\SellerProfileController@index');
         Route::get('/seller-profile-form/{seller_id}', '\App\Http\Controllers\SellerProfileController@addEditSellerProfile');
