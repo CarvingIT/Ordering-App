@@ -62,4 +62,6 @@ Route::group(['middleware' => 'auth:sanctum','seller','admin'], function(){
         Route::post('/saveproduct', '\App\Http\Controllers\ProductController@save');
         //Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::post('/product/delete','\App\Http\Controllers\ProductController@deleteProduct');
+        Route::post('/product/upload/image','\App\Http\Controllers\ProductController@uploadProductImage');
+	Route::get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
 });

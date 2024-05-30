@@ -9,12 +9,42 @@
         </h2>
     </x-slot>
 
+<!--Resume Flyer Validatiobn-->
+<script type="text/javascript">
+function ImagefileValidation(){
+    var fileInput = document.getElementById('image_path');
+    var filePath = fileInput.value;
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    if(!allowedExtensions.exec(filePath)){
+        alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+        fileInput.value = '';
+        return false;
+    }else{
+        //Image preview
+        if (fileInput.files && fileInput.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imagePreview').innerHTML = '<img src="'+e.target.result+'"/>';
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+        if (fileInput.files[0].size > 2097152){
+                        alert('File size is more than 2MB');
+                        fileInput.value = '';
+                        return false;
+                    }
+}
+
+</script>
+
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 	        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
     			<div class="mt-6 text-gray-500">
-				<form name="save-user" action="/admin/saveproduct" method="post">
+				<form name="save-user" action="/admin/saveproduct" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="product_id" value="{{ $product->id }}" />	
 				<input type="hidden" name="referer" value="@php if(!empty($_SERVER['HTTP_REFERER'])){echo $_SERVER['HTTP_REFERER'];} @endphp">
 				@csrf	
@@ -38,11 +68,7 @@
              <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="product_name" name="product_name" type="text" value="{{ $product->product_name }}" >
         </div>
 	<br />
-        <div class="col-span-4">
-             <label class="block font-medium text-sm" for="description">Description</label>
-             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="description" rows="5" name="description">{{ $product->description }}</textarea>
-        </div>
-	<br />
+
         <div class="col-span-4">
              <label class="block font-medium text-sm" for="categories">Categories</label>
 		<select class="form-input rounded-md shadow-sm mt-1 block w-full" id="category_id" name="category_id">
@@ -52,6 +78,23 @@
              </select>
         </div>
 	<br />
+
+    	<div class="col-span-4">
+      	<label for="name">Upload Product Image</label>
+		@foreach($product_images as $photo)
+		<a href="/product/{{ $product->id }}/loadimage/{{ $photo->id }}" target="_blank"><img src="/product/{{ $product->id }}/loadimage/{{ $photo->id }}" width="150" height="150"></a>
+		@endforeach
+             <input id="image_path" type="file" name="image_path" onchange="return ImagefileValidation()">
+                <p class="small">Flyer images of type jpg, png,jpeg,gif are allowed. Allowed maximum size is 2MB.</p>
+    	</div>
+	<br />
+
+        <div class="col-span-4">
+             <label class="block font-medium text-sm" for="description">Description</label>
+             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="description" rows="5" name="description">{{ $product->description }}</textarea>
+        </div>
+	<br />
+
     </div>
     </div>
 

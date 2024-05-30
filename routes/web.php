@@ -21,6 +21,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::middleware(['admin','seller'])->get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
+
 Route::group(['prefix' => '/admin'], function(){
 	Route::group(['middleware' => 'admin'], function(){
 		
@@ -54,5 +56,7 @@ Route::group(['prefix' => '/admin'], function(){
 
 	});
 });
+
+
 
 require __DIR__.'/auth.php';
