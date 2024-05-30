@@ -108,8 +108,8 @@ $("#deletedialog").dialog({
                         <tr>
                         <td>{{ $p->product_name }}</td>
                         <td>{{ $p->description }}</td>
-                        <td>{{ $p->seller_id }}</td>
-                        <td>{{ $p->taxonomy_id }}</td>
+                        <td>{{ $p->seller->business_name }}</td>
+                        <td>{{ $p->category->label }}</td>
 			<td>
 				<a href="/admin/product/{{ $p->id }}" title="View Details"><span class="fas fa-eye"></span></a>
 				@if(Auth::user()->hasRole('admin'))
