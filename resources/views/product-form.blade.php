@@ -81,12 +81,26 @@ function ImagefileValidation(){
 
     	<div class="col-span-4">
       	<label for="name">Upload Product Image</label>
+		<ul>
 		@foreach($product_images as $photo)
-		<a href="/product/{{ $product->id }}/loadimage/{{ $photo->id }}" target="_blank"><img src="/product/{{ $product->id }}/loadimage/{{ $photo->id }}" width="150" height="150"></a>
+		<li><a href="/product/{{ $product->id }}/loadimage/{{ $photo->id }}" target="_blank"><img src="/product/{{ $product->id }}/loadimage/{{ $photo->id }}" width="150" height="150"></a><br /></li>
 		@endforeach
+		</ul>
+		<br />
              <input id="image_path" type="file" name="image_path" onchange="return ImagefileValidation()">
                 <p class="small">Flyer images of type jpg, png,jpeg,gif are allowed. Allowed maximum size is 2MB.</p>
     	</div>
+	<br />
+
+        <div class="col-span-4">
+             <label class="block font-medium text-sm" for="product_video">Product Video URL</label>
+		<ul>
+		@foreach($product_videos as $video)
+			<li><a href="{{ $video->video_url }}" target="_blank">Click here to view video</a><br /></li>
+		@endforeach
+		</ul>
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="video_url" name="video_url" type="text" value="" >
+        </div>
 	<br />
 
         <div class="col-span-4">

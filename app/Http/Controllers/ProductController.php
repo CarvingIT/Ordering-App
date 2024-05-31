@@ -9,6 +9,7 @@ use \App\Models\Taxonomy;
 use \App\Models\Product;
 use \App\Models\SellerProfile;
 use \App\Models\ProductImage;
+use \App\Models\ProductVideo;
 use Session;
 
 class ProductController extends Controller
@@ -31,11 +32,12 @@ class ProductController extends Controller
         else{
             $product = Product::find($product_id);
 	    $product_images = ProductImage::where('product_id',$product_id)->get();
+	    $product_videos = ProductVideo::where('product_id',$product_id)->get();
         }
 	$sellers = SellerProfile::all();
 	$taxonomies = Taxonomy::all();
         return view('product-form', ['product'=>$product, 'sellers'=>$sellers, 
-		'taxonomies'=>$taxonomies, 'product_images'=>$product_images, 
+		'taxonomies'=>$taxonomies, 'product_images'=>$product_images, 'product_videos'=>$product_videos,
 		'activePage'=>'Product', 'titlePage'=>'Product']);
         }// function ends
 
@@ -77,9 +79,15 @@ class ProductController extends Controller
                 $photo= new ProductImage;
                 $photo->image_path = $filepath;
                 $photo->product_id = $product_id;
-                $photo->display_order = $request->display_order;
+                //$photo->display_order = $request->display_order;
                 $photo->save();
         } ## image_path ends
+	if(!empty($request->video_url)){
+		$video = new ProductVideo;
+		$video->video_url = $request->video_url;
+		$video->product_id = $product_id;
+		$video->save();
+	} ## video url ends
 
          try{
 	    if($request->is('api/*')){
@@ -118,7 +126,7 @@ class ProductController extends Controller
                 $photo= new ProductImage;
                 $photo->image_path = $filepath;
                 $photo->product_id = $product_id;
-                $photo->display_order = $request->display_order;
+                //$photo->display_order = $request->display_order;
                 $photo->save();
         } ## image_path ends
 
@@ -167,8 +175,13 @@ class ProductController extends Controller
         	$product = Product::where('id',$request->product_id)->first();
 		$sellers = SellerProfile::all();
 		$taxonomies = Taxonomy::all();
+		$product_photos = ProductImage::where('product_id',$request->product_id)->get();
+		$product_videos = ProductVideo::where('product_id',$request->product_id)->get();
 		if($request->is('api/*')){
-                	return response()->json(['MessageType'=>1, 'product'=>$product, 'sellers'=>$sellers, 'taxonomies'=>$taxonomies], 200);
+                	return response()->json(['MessageType'=>1, 'product'=>$product, 
+					'product_photos'=>$product_photos,
+					'product_videos'=>$product_videos,
+					'sellers'=>$sellers, 'taxonomies'=>$taxonomies], 200);
         	}
         	else{
         		return view('productdetails', ['product'=>$product, 'sellers'=>$sellers, 'taxonomies'=>$taxonomies, 'activePage'=>'Products','titlePage'=>'Products']);
@@ -183,6 +196,40 @@ class ProductController extends Controller
                 return redirect('/admin/products');
                 }
           }
+        }// function ends
+
+	public function uploadProductVideoURL(Request $request){
+		$product_id = $request->product_id;
+	if(!empty($request->video_url)){
+		$video = new ProductVideo;
+		$video->video_url = $request->video_url;
+		$video->product_id = $product_id;
+		$video->save();
+         try{
+	    if($request->is('api/*')){
+                return response()->json(['MessageType'=>1, 'Message'=>'Product Video saved successfully','Product ID'=>$product_id], 200);
+            }
+         }
+         catch(\Exception $e){
+		if($request->is('api/*')){
+                        return response()->json(['MessageType'=>0, 'Message'=> 'Please try again', 'error'=>$e->getMessage()], 422);
+                }
+	 }
+	} ## if of video_url empty ends
+	} ## function ends		
+
+	public function loadProductVideoURL(Request $request){
+		$product_video = ProductVideo::where('product_id',$request->product_id)
+				->where('id',$request->video_id)
+				->get();
+		if($request->is('api/*')){
+			if(!empty($product_video)){
+                	return response()->json(['MessageType'=>1, 'product_video'=>$product_video], 200); 
+			}
+			else{
+                	return response()->json(['MessageType'=>0, 'Message'=>'Product videos are not available'], 422); 
+			}
+        	}
         }// function ends
 
 
