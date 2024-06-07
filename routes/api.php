@@ -23,7 +23,8 @@ Route::post('/user/get-token', '\App\Http\Controllers\UserController@login');
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('/taxonomies', '\App\Http\Controllers\TaxonomyController@index');
-        Route::get('/products', '\App\Http\Controllers\ProductController@index');
+        //Route::get('/products', '\App\Http\Controllers\ProductController@index');
+        Route::get('/products/{offset}/{length}', '\App\Http\Controllers\ProductController@index');
         Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
 });
@@ -50,7 +51,7 @@ Route::group(['middleware' => 'auth:sanctum','admin'], function(){
 
 Route::group(['middleware' => 'auth:sanctum','seller','admin'], function(){
         //Sellers
-        Route::get('/sellerprofiles', '\App\Http\Controllers\SellerProfileController@index');
+        Route::get('/sellerprofiles/{offset}/{length}', '\App\Http\Controllers\SellerProfileController@index');
         Route::get('/seller-profile-form/{seller_id}', '\App\Http\Controllers\SellerProfileController@addEditSellerProfile');
         Route::post('/saveseller', '\App\Http\Controllers\SellerProfileController@save');
         //Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
