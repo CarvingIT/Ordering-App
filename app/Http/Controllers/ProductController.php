@@ -194,6 +194,18 @@ class ProductController extends Controller
         public function deleteProduct(Request $request){
         $product = Product::find($request->product_id);
           if(!empty($product)){
+		$product_images = \App\Models\ProductImage::where('product_id',$request->product_id)->get();	
+		if(!empty($product_images)){
+		foreach($product_images as $img){
+			$img->delete();
+		}
+		}
+		$product_videos = \App\Models\ProductVideo::where('product_id',$request->product_id)->get();	
+		if(!empty($product_videos)){
+		foreach($product_videos as $video){
+			$video->delete();
+		}
+		}
                 if($product->delete()){
                 Session::flash('alert-success', 'Product deleted successfully!');
                 return redirect('/admin/products');
