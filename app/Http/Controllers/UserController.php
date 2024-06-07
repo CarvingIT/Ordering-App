@@ -90,10 +90,15 @@ class UserController extends Controller
                         $token = auth()->user()->createToken('orderingapp_token')->plainTextToken;
                         $profile = auth()->user()->profile;
 			$roles = auth()->user()->roles()->get();
+			foreach($roles as $role){
+				$role_name = \App\Models\Role::find($role->role_id);
+				$role_names[] = $role_name->name;
+			}
                         return response()->json(['MessageType'=>1,
                                         'Message'=>'Authentication successful',
-                                        'User' => auth()->user()->email,
-					'Roles' => $roles,
+                                        'User Details' => auth()->user(),
+					//'Roles' => $roles,
+					'Role Names' => $role_names,
                                         'token' => $token], 200);
                 } else {
                         return response()->json(['MessageType'=>0, 'Message'=>'UnAuthorised'], 401);
