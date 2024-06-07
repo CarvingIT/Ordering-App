@@ -15,11 +15,14 @@ use Session;
 class ProductController extends Controller
 {
 	public function index(Request $request){
-        $products = Product::all();
 	if($request->is('api/*')){
+        	$products = Product::skip($request->offset)->take($request->length)
+			->orderBy('id','DESC')
+			->get();
            	return response()->json(['MessageType'=>1, 'products'=>$products], 200);
         }
         else{
+        	$products = Product::all();
         	return view('productsmanagement', ['products'=>$products, 'activePage'=>'Products','titlePage'=>'Products']);
 	}
         }// function ends

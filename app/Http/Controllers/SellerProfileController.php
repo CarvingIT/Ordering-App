@@ -10,11 +10,14 @@ use Session;
 class SellerProfileController extends Controller
 {
 	public function index(Request $request){
-        $sellers = SellerProfile::all();
 	if($request->is('api/*')){
+		$sellers = SellerProfile::skip($request->offset)->take($request->length)
+			->orderBy('id','DESC')
+			->get();
         	return response()->json(['MessageType'=>1, 'sellers'=>$sellers], 200);
         }
         else{
+        	$sellers = SellerProfile::all();
         	return view('sellermanagement', ['sellers'=>$sellers, 'activePage'=>'Users','titlePage'=>'Users']);
 	}
         }// function ends
