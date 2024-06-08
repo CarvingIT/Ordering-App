@@ -94,7 +94,7 @@ class ProductController extends Controller
 
          try{
 	    if($request->is('api/*')){
-                return response()->json(['MessageType'=>1, 'Message'=>'Product Details saved successfully','Product ID'=>$product_id], 200);
+                return response()->json(['MessageType'=>1, 'Message'=>'Product Details saved successfully','product_id'=>$product_id], 200);
             }
             else{
             	Session::flash('alert-success', "Products's details saved successfully");
@@ -135,7 +135,7 @@ class ProductController extends Controller
 
          try{
 	    if($request->is('api/*')){
-                return response()->json(['MessageType'=>1, 'Message'=>'Product Image saved successfully','Product ID'=>$product_id], 200);
+                return response()->json(['MessageType'=>1, 'Message'=>'Product Image saved successfully','product_id'=>$product_id], 200);
             }
          }
          catch(\Exception $e){
@@ -222,7 +222,7 @@ class ProductController extends Controller
 		$video->save();
          try{
 	    if($request->is('api/*')){
-                return response()->json(['MessageType'=>1, 'Message'=>'Product Video saved successfully','Product ID'=>$product_id], 200);
+                return response()->json(['MessageType'=>1, 'Message'=>'Product Video saved successfully','product_id'=>$product_id], 200);
             }
          }
          catch(\Exception $e){

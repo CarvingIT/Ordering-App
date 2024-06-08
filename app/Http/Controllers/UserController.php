@@ -96,9 +96,9 @@ class UserController extends Controller
 			}
                         return response()->json(['MessageType'=>1,
                                         'Message'=>'Authentication successful',
-                                        'User Details' => auth()->user(),
+                                        'user_details' => auth()->user(),
 					//'Roles' => $roles,
-					'Role Names' => $role_names,
+					'role_names' => $role_names,
                                         'token' => $token], 200);
                 } else {
                         return response()->json(['MessageType'=>0, 'Message'=>'UnAuthorised'], 401);
