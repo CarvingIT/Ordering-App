@@ -90,6 +90,7 @@ class UserController extends Controller
                         $token = auth()->user()->createToken('orderingapp_token')->plainTextToken;
                         $profile = auth()->user()->profile;
 			$roles = auth()->user()->roles()->get();
+			$role_names = [];
 			foreach($roles as $role){
 				$role_name = \App\Models\Role::find($role->role_id);
 				$role_names[] = $role_name->name;
