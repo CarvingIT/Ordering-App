@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth:sanctum','admin'], function(){
 Route::group(['middleware' => 'auth:sanctum','seller','admin'], function(){
         //Sellers
         Route::get('/sellerprofiles/{offset}/{length}', '\App\Http\Controllers\SellerProfileController@index');
+        Route::get('/my-sellerprofiles/{offset}/{length}', '\App\Http\Controllers\SellerProfileController@getMyBusinesses');
         Route::get('/seller-profile-form/{seller_id}', '\App\Http\Controllers\SellerProfileController@addEditSellerProfile');
         Route::post('/saveseller', '\App\Http\Controllers\SellerProfileController@save');
         //Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
@@ -59,6 +60,7 @@ Route::group(['middleware' => 'auth:sanctum','seller','admin'], function(){
 
         //Products
         //Route::get('/products', '\App\Http\Controllers\ProductController@index');
+        Route::get('/my-products/{offset}/{length}', '\App\Http\Controllers\ProductController@getMyProducts');
         Route::get('/product-form/{product_id}', '\App\Http\Controllers\ProductController@addEditProduct');
         Route::post('/saveproduct', '\App\Http\Controllers\ProductController@save');
         //Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');

@@ -22,6 +22,22 @@ class SellerProfileController extends Controller
 	}
         }// function ends
 
+	public function getMyBusinesses(Request $request){
+	if($request->is('api/*')){
+		$sellers = SellerProfile::where('user_id',auth()->user()->id)
+			->skip($request->offset)->take($request->length)
+			->orderBy('id','DESC')
+			->get();
+        	return response()->json(['MessageType'=>1, 'sellers'=>$sellers], 200);
+        }
+        else{
+        	$sellers = SellerProfile::where('user_id',auth()->user()->id)->get();
+        	return view('sellermanagement', ['sellers'=>$sellers, 'activePage'=>'Users','titlePage'=>'Users']);
+	}
+        }// function ends
+
+	
+
 	public function addEditSellerProfile($seller_id){
         if($seller_id == 'new'){
             $seller = new SellerProfile();
@@ -45,11 +61,11 @@ class SellerProfileController extends Controller
          $u->description = $request->input('description');
          $u->business_email = $request->input('business_email');
          $u->business_phone = $request->input('business_phone');
-	 if(empty($request->user_id)){
-	 $u->user_id = auth()->user()->id;
+	 if(auth()->user()->hasRole('admin')){
+	 $u->user_id = $request->input('user_id');
 	 }
 	 else{
-	 $u->user_id = $request->input('user_id');
+	 $u->user_id = auth()->user()->id;
 	 }
 
          try{

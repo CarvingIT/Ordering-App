@@ -27,6 +27,25 @@ class ProductController extends Controller
 	}
         }// function ends
 
+	public function getMyProducts(Request $request){
+	$seller_ids = SellerProfile::where('user_id',auth()->user()->id)->get();
+	$sellers = [];
+	foreach($seller_ids as $seller){
+		$sellers[] = $seller->id;
+	}	
+	if($request->is('api/*')){
+        	$products = Product::wherein('seller_id',$sellers)
+			->skip($request->offset)->take($request->length)
+			->orderBy('id','DESC')
+			->get();
+           	return response()->json(['MessageType'=>1, 'products'=>$products], 200);
+        }
+        else{
+        	$products = Product::wherein('seller_id',$sellers)->get();
+        	return view('productsmanagement', ['products'=>$products, 'activePage'=>'Products','titlePage'=>'Products']);
+	}
+        }// function ends
+
         public function addEditProduct($product_id){
 	$product_images = [];
         if($product_id == 'new'){
