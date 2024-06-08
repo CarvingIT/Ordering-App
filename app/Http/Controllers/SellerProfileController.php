@@ -45,11 +45,11 @@ class SellerProfileController extends Controller
          $u->description = $request->input('description');
          $u->business_email = $request->input('business_email');
          $u->business_phone = $request->input('business_phone');
-	 if(empty($request->user_id)){
-	 $u->user_id = auth()->user()->id;
+	 if(auth()->user()->hasRole('admin')){
+	 $u->user_id = $request->input('user_id');
 	 }
 	 else{
-	 $u->user_id = $request->input('user_id');
+	 $u->user_id = auth()->user()->id;
 	 }
 
          try{
