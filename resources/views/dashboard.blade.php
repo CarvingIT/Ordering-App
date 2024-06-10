@@ -38,7 +38,7 @@
 					@endforeach
 				@endif
 
-		@elseif(!auth()->user()->hasRole('Seller'))
+		@elseif(!auth()->user()->hasRole('seller'))
 			<form name="user_seller_request" method="post" action="/save_user_seller_request">
 				@csrf
 				<input type="checkbox" value="1" name="user_seller_request"> I want to become a Seller<br />
