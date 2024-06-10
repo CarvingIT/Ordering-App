@@ -80,7 +80,7 @@ class UserController extends Controller
 
 	public function saveUserSellerRequest(Request $request){
 		$user_roles = UserRole::where('user_id',auth()->user()->id)->first();
-		if($user_roles->isEmpty(){
+		if($user_roles->isEmpty()){
 		$seller_requests = UserSellerRequest::where('user_id',auth()->user()->id)
 				->where('status','0')
 				->get();
