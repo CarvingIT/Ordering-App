@@ -185,7 +185,7 @@ class ProductController extends Controller
                 'Content-Type' => $mime,
                 'Content-Length' => $size,
                 'Content-Description' => 'File Transfer',
-                'Content-Disposition' => "attachment; filename={$file_name}",
+                //'Content-Disposition' => "attachment; filename={$file_name}",
                 'Content-Transfer-Encoding' => 'binary',
                 ];
                 ob_end_clean();
