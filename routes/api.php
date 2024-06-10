@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/user/register', '\App\Http\Controllers\UserController@register');
 Route::post('/user/get-token', '\App\Http\Controllers\UserController@login');
+Route::get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('/taxonomies', '\App\Http\Controllers\TaxonomyController@index');
@@ -66,7 +67,6 @@ Route::group(['middleware' => 'auth:sanctum','seller','admin'], function(){
         //Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::post('/product/delete','\App\Http\Controllers\ProductController@deleteProduct');
         Route::post('/product/upload/image','\App\Http\Controllers\ProductController@uploadProductImage');
-	Route::get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
         Route::post('/product/upload/video_url','\App\Http\Controllers\ProductController@uploadProductVideoURL');
 	Route::get('/product/{product_id}/loadvideourl/{video_id}', '\App\Http\Controllers\ProductController@loadProductVideoURL');
 });
