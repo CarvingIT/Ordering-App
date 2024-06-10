@@ -79,6 +79,8 @@ class UserController extends Controller
         }
 
 	public function saveUserSellerRequest(Request $request){
+		$user_roles = UserRole::where('user_id',auth()->user()->id)->first();
+		if($user_roles->isEmpty(){
 		$seller_requests = UserSellerRequest::where('user_id',auth()->user()->id)
 				->where('status','0')
 				->get();
@@ -107,7 +109,21 @@ class UserController extends Controller
          		}
 		}
 		else{
-                Session::flash('alert-danger', 'Request is already with us. The approval is Pending.');
+				if($request->is('api/*')){
+                		return response()->json(['MessageType'=>0, 'Message'=>'Request is already with us. The approval is Pending.'], 422);
+        			}
+				else{
+                		Session::flash('alert-danger', 'Request is already with us. The approval is Pending.');
+				}
+		}
+		}
+		else{
+				if($request->is('api/*')){
+                		return response()->json(['MessageType'=>0, 'Message'=>'Request is already with us. The approval is Pending.'], 422);
+        			}
+				else{
+                		Session::flash('alert-danger', 'Request is already with us. The approval is Pending.');
+				}
 		}
                 return redirect('/dashboard');
 	}
