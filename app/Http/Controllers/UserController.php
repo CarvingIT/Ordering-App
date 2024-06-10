@@ -119,10 +119,10 @@ class UserController extends Controller
 		}
 		else{
 				if($request->is('api/*')){
-                		return response()->json(['MessageType'=>0, 'Message'=>'Request is already with us. The approval is Pending.'], 422);
+                		return response()->json(['MessageType'=>0, 'Message'=>'The Seller role has been approved'], 422);
         			}
 				else{
-                		Session::flash('alert-danger', 'Request is already with us. The approval is Pending.');
+                		Session::flash('alert-danger', 'The Seller role has been approved');
 				}
 		}
                 return redirect('/dashboard');
