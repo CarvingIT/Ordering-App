@@ -27,11 +27,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('/products/{offset}/{length}', '\App\Http\Controllers\ProductController@index');
         Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
+	Route::post('/save_user_seller_request', '\App\Http\Controllers\UserController@saveUserSellerRequest');
 });
 
 
 Route::group(['middleware' => 'auth:sanctum','admin'], function(){
-        Route::post('/user/assignrole', '\App\Http\Controllers\UserController@assignRole');
 
         //People/Users
         Route::get('/people', '\App\Http\Controllers\UserController@index');

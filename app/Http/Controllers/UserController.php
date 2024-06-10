@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\UserRole;
+use App\Models\UserSellerRequest;
 use Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -77,6 +78,40 @@ class UserController extends Controller
           }
         }
 
+	public function saveUserSellerRequest(Request $request){
+		$seller_requests = UserSellerRequest::where('user_id',auth()->user()->id)
+				->where('status','0')
+				->get();
+		
+		if($seller_requests->isEmpty()){
+			$s_r = new UserSellerRequest;
+			$s_r->user_id = auth()->user()->id;
+			$s_r->status = 0;
+			$s_r->save();
+         		try{
+            			$s_r->save();
+				if($request->is('api/*')){
+                		return response()->json(['MessageType'=>1, 'Message'=>'Become a Seller request has been submitted successfully. An admin will approve it.','status'=>'Pending'], 200);
+        			}
+				else{
+            			Session::flash('alert-success', "Become a Seller request has been submitted successfully.");
+				}		
+         		}
+         		catch(\Exception $e){
+				if($request->is('api/*')){
+                		return response()->json(['MessageType'=>0, 'Message'=>'Please try again','error'=>$e->getMessage()], 422);
+        			}
+				else{
+                		Session::flash('alert-danger', $e->getMessage());
+				}
+         		}
+		}
+		else{
+                Session::flash('alert-danger', 'Request is already with us. The approval is Pending.');
+		}
+                return redirect('/dashboard');
+	}
+
 /***** Mobile app API related functions start here *****/
 
         public function login(Request $request)
@@ -108,33 +143,30 @@ class UserController extends Controller
 
 	public function assignRole(Request $request){
 	//echo "SKK"; exit;
-		$user_id = $request->input('user_id');
-		$role_name = $request->input('role_name');
-		$role = \App\Models\Role::where('name',$role_name)->first();
-		$role_id = $role->id;
-		$user = User::find($user_id);
-		if(!$user->hasRole('Seller')){
+		$seller_requests = \App\Models\UserSellerRequest::where('status','0')->get();
+
+		if(!empty($seller_requests)){
+		foreach($seller_requests as $request_details){
+			$s_r = \App\Models\UserSellerRequest::where('user_id',$request_details->user_id)->first();
+			$s_r->status='1';
+			$s_r->save();
+			$role_name = 'Seller';
+			$role = \App\Models\Role::where('name',$role_name)->first();
+			$role_id = $role->id;
+			$user = User::find($request_details->user_id);
 			$ur = new UserRole;
-			$ur->user_id = $user_id;
+			$ur->user_id = $request_details->user_id;
 			$ur->role_id = $role_id;
-		}	
-         try{
-            $ur->save();
-		if($request->is('api/*')){
-                return response()->json(['MessageType'=>1, 'Message'=>$role_name.' role assigned successfully'], 200);
-        	}
-		else{
-            	Session::flash('alert-success', "Person's details saved successfully");
-		}		
-         }
-         catch(\Exception $e){
-		if($request->is('api/*')){
-                return response()->json(['MessageType'=>0, 'Message'=>'Please try again','error'=>$e->getMessage()], 422);
-        	}
-		else{
-                Session::flash('alert-danger', $e->getMessage());
-		}
-         }
+         		try{
+            			$ur->save();
+            			Session::flash('alert-success', "The Seller role has been assigned successfully to the user ".$user->name);
+         		}
+         		catch(\Exception $e){
+                		Session::flash('alert-danger', $e->getMessage());
+         		}
+		}## if of empty seller_requests ends
+		}## foreach ends
+		return redirect('/dashboard');
 	}// function ends
 
 	public function register(Request $request)

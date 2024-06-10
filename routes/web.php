@@ -22,9 +22,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['admin','seller'])->get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
+Route::middleware(['auth'])->post('/save_user_seller_request', '\App\Http\Controllers\UserController@saveUserSellerRequest');
 
 Route::group(['prefix' => '/admin'], function(){
 	Route::group(['middleware' => 'admin'], function(){
+	Route::post('/user/assignrole', '\App\Http\Controllers\UserController@assignRole');
 		
 	//People/Users
         Route::get('/people', '\App\Http\Controllers\UserController@index')->name('usermanagement');
