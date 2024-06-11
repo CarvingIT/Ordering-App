@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::middleware(['admin','seller'])->get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
+Route::get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
 Route::middleware(['auth'])->post('/save_user_seller_request', '\App\Http\Controllers\UserController@saveUserSellerRequest');
 
 Route::group(['prefix' => '/admin'], function(){
