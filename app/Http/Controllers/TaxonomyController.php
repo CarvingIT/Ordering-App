@@ -62,16 +62,32 @@ class TaxonomyController extends Controller
                 return redirect('/admin/taxonomies');
         }
 
-	public function deleteTaxonomy(Request $request){
-                $taxonomy = \App\Models\Taxonomy::find($request->taxonomy_id);
+	public function deleteCategory(Request $request){
+		//echo $request->category_id; exit;
+                $taxonomy = \App\Models\Taxonomy::find($request->category_id);
                 $children = array();
-                if($taxonomy->parent == 0){
-                        $children = Category::where('parent',$taxonomy->id)->get();
-                        if($taxonomy->delete()){
+                if(!empty($taxonomy) && $taxonomy->parent_id != 0){
+                        $children = Taxonomy::where('parent_id',$taxonomy->id)->get();
+			if(!$children->isEmpty()){
                                 foreach($children as $child){
-                                        $child->delete();
+					$category_products = \App\Models\Product::where('taxonomy_id',$child->id)->get();
+					if(!empty($category_products)){
+						foreach($category_products as $product){
+							$product->delete();
+						}
+					}
+                        	$child->delete();
                                 }
                         }
+			else{
+				$category_products = \App\Models\Product::where('taxonomy_id',$taxonomy->id)->get();
+				if(!empty($category_products)){
+					foreach($category_products as $product){
+						$product->delete();
+					}
+				}
+			}
+		$taxonomy->delete();
                 }
                 else{
                         $taxonomy->delete();

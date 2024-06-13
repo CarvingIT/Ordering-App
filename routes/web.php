@@ -47,7 +47,7 @@ Route::group(['prefix' => '/admin'], function(){
         Route::get('/taxonomy-form/{taxonomy_id}/{parent_id?}', '\App\Http\Controllers\TaxonomyController@addEditTaxonomy');
         Route::post('/savetaxonomy', '\App\Http\Controllers\TaxonomyController@save');
         Route::get('/taxonomy/{taxonomy_id}','\App\Http\Controllers\TaxonomyController@viewUser');
-        Route::post('/taxonomy/delete', '\App\Http\Controllers\TaxonomyController@deleteUser');
+        Route::post('/category/delete', '\App\Http\Controllers\TaxonomyController@deleteCategory');
 
 	//Products
         Route::get('/products', '\App\Http\Controllers\ProductController@index')->name('products');
