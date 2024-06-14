@@ -51,10 +51,12 @@ Route::group(['prefix' => '/admin'], function(){
 
 	//Products
         Route::get('/products', '\App\Http\Controllers\ProductController@index')->name('products');
+	Route::get('/my-products/{offset}/{length}', '\App\Http\Controllers\ProductController@getMyProducts');
         Route::get('/product-form/{product_id}', '\App\Http\Controllers\ProductController@addEditProduct');
         Route::post('/saveproduct', '\App\Http\Controllers\ProductController@save');
         Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::post('/product/delete','\App\Http\Controllers\ProductController@deleteProduct');
+	Route::get('/category/{category_id}/products/{offset}/{length}', '\App\Http\Controllers\ProductController@getCategoryProducts');
 
 	});
 });

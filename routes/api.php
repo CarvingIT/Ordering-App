@@ -24,7 +24,7 @@ Route::get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('/taxonomies', '\App\Http\Controllers\TaxonomyController@index');
-        //Route::get('/products', '\App\Http\Controllers\ProductController@index');
+        Route::get('/category/{category_id}/products/{offset}/{length}', '\App\Http\Controllers\ProductController@getCategoryProducts');
         Route::get('/products/{offset}/{length}', '\App\Http\Controllers\ProductController@index');
         Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
@@ -60,13 +60,12 @@ Route::group(['middleware' => 'auth:sanctum','seller','admin'], function(){
         Route::post('/seller/delete', '\App\Http\Controllers\SellerProfileController@deleteSeller');
 
         //Products
-        //Route::get('/products', '\App\Http\Controllers\ProductController@index');
         Route::get('/my-products/{offset}/{length}', '\App\Http\Controllers\ProductController@getMyProducts');
         Route::get('/product-form/{product_id}', '\App\Http\Controllers\ProductController@addEditProduct');
         Route::post('/saveproduct', '\App\Http\Controllers\ProductController@save');
-        //Route::get('/product/{product_id}','\App\Http\Controllers\ProductController@viewProduct');
         Route::post('/product/delete','\App\Http\Controllers\ProductController@deleteProduct');
         Route::post('/product/upload/image','\App\Http\Controllers\ProductController@uploadProductImage');
         Route::post('/product/upload/video_url','\App\Http\Controllers\ProductController@uploadProductVideoURL');
 	Route::get('/product/{product_id}/loadvideourl/{video_id}', '\App\Http\Controllers\ProductController@loadProductVideoURL');
+
 });
