@@ -46,8 +46,22 @@ class ProductController extends Controller
 	}
         }// function ends
 
+	public function getCategoryProducts(Request $request){
+	if($request->is('api/*')){
+        	$products = Product::where('taxonomy_id',$request->category_id)
+			->skip($request->offset)->take($request->length)
+			->orderBy('id','DESC')
+			->get();
+           	return response()->json(['MessageType'=>1, 'products'=>$products], 200);
+        }
+        else{
+        	$products = Product::where('taxonomy_id',$request->category_id)->get();
+        	return view('productsmanagement', ['products'=>$products, 'activePage'=>'Products','titlePage'=>'Products']);
+	}
+        }// function ends
+
         public function addEditProduct($product_id){
-	$product_images = [];
+	$product_images = $product_videos = [];
         if($product_id == 'new'){
             $product = new Product();
         }
