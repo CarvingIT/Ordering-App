@@ -104,14 +104,32 @@ class SellerProfileController extends Controller
         public function deleteSeller(Request $request){
         $seller = SellerProfile::find($request->seller_id);
           if(!empty($seller)){
+			$products = \App\Models\Product::where('seller_id',$request->seller_id)->get();
+			if(!empty($products)){
+				foreach($products as $product){
+					$product_images = \App\Models\ProductImage::where('product_id',$product->id)->get();
+			                if(!empty($product_images)){
+                			foreach($product_images as $img){
+                        			$img->delete();
+                			}
+                			}
+                			$product_videos = \App\Models\ProductVideo::where('product_id',$product->id)->get();
+                			if(!empty($product_videos)){
+                			foreach($product_videos as $video){
+                        			$video->delete();
+                			}
+					}
+				$product->delete();
+				}	
+			}
                 if($seller->delete()){
-	    if($request->is('api/*')){
-               return response()->json(['MessageType'=>1, 'Message'=>'Seller profile deleted successfully'], 200);
-            }
-            else{
-                Session::flash('alert-success', 'Seller profile deleted successfully!');
-                return redirect('/admin/sellerprofiles');
-	    }
+	    		if($request->is('api/*')){
+               		return response()->json(['MessageType'=>1, 'Message'=>'Seller profile deleted successfully'], 200);
+            		}
+            		else{
+                		Session::flash('alert-success', 'Seller profile deleted successfully!');
+                		return redirect('/admin/sellerprofiles');
+	    		}
                 }
           }
         }
