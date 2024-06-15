@@ -66,13 +66,25 @@ class TaxonomyController extends Controller
 		//echo $request->category_id; exit;
                 $taxonomy = \App\Models\Taxonomy::find($request->category_id);
                 $children = array();
-                if(!empty($taxonomy) && $taxonomy->parent_id != 0){
+                //if($taxonomy->parent_id != 0){
                         $children = Taxonomy::where('parent_id',$taxonomy->id)->get();
 			if(!$children->isEmpty()){
                                 foreach($children as $child){
 					$category_products = \App\Models\Product::where('taxonomy_id',$child->id)->get();
 					if(!empty($category_products)){
 						foreach($category_products as $product){
+							$images = \App\Models\ProductImage::where('product_id',$product->id)->get();
+							if(!empty($images)){
+							foreach($images as $image){
+								$image->delete();
+					 		}			 
+							}	
+							$videos = \App\Models\ProductVideo::where('product_id',$product->id)->get();
+							if(!empty($videos)){
+							foreach($videos as $video){
+								$video->delete();
+					 		}			 
+							}	
 							$product->delete();
 						}
 					}
@@ -83,15 +95,34 @@ class TaxonomyController extends Controller
 				$category_products = \App\Models\Product::where('taxonomy_id',$taxonomy->id)->get();
 				if(!empty($category_products)){
 					foreach($category_products as $product){
+							$images = \App\Models\ProductImage::where('product_id',$product->id)->get();
+							if(!empty($images)){
+							foreach($images as $image){
+								$image->delete();
+					 		}			 
+							}	
+							$videos = \App\Models\ProductVideo::where('product_id',$product->id)->get();
+							if(!empty($videos)){
+							foreach($videos as $video){
+								$video->delete();
+					 		}			 
+							}	
 						$product->delete();
 					}
 				}
 			}
 		$taxonomy->delete();
-                }
-                else{
-                        $taxonomy->delete();
-                }
+                //}
+                //else{
+		//	echo "SKK"; exit;
+		//		$category_products = \App\Models\Product::where('taxonomy_id',$taxonomy->id)->get();
+		//		if(!empty($category_products)){
+		//			foreach($category_products as $product){
+		//				$product->delete();
+		//			}
+		//		}
+                 //       $taxonomy->delete();
+                //}
                 Session::flash('alert-success', 'Taxonomy deleted successfully!');
                 return redirect('/admin/taxonomies');
         }
