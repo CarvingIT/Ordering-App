@@ -209,8 +209,10 @@ class ProductController extends Controller
 
 	public function viewProduct(Request $request){
         	$product = Product::where('id',$request->product_id)->first();
-		$sellers = SellerProfile::all();
-		$taxonomies = Taxonomy::all();
+		//$sellers = SellerProfile::all();
+		//$taxonomies = Taxonomy::all();
+		$sellers = SellerProfile::find($product->seller_id);
+		$taxonomies = Taxonomy::find($product->taxonomy_id);
 		$product_photos = ProductImage::where('product_id',$request->product_id)->get();
 		$product_videos = ProductVideo::where('product_id',$request->product_id)->get();
 		if($request->is('api/*')){
