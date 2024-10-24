@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 use \App\Models\Taxonomy;
 use \App\Models\Product;
 use \App\Models\SellerProfile;
@@ -95,6 +96,9 @@ class ProductController extends Controller
 	 }
 	 else{
          	$p->seller_id = $request->input('seller_id');
+	 }
+	 if(!empty($request->input('approved'))){
+		$p->approved = Carbon::now();
 	 }
             $p->save();
             $product_id = $p->id;
