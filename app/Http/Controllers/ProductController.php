@@ -17,7 +17,8 @@ class ProductController extends Controller
 {
 	public function index(Request $request){
 	if($request->is('api/*')){
-        	$products = Product::skip($request->offset)->take($request->length)
+		$products = Product::whereNotNull('approved')
+			->skip($request->offset)->take($request->length)
 			->orderBy('id','DESC')
 			->get();
            	return response()->json(['MessageType'=>1, 'products'=>$products], 200);
@@ -50,6 +51,7 @@ class ProductController extends Controller
 	public function getCategoryProducts(Request $request){
 	if($request->is('api/*')){
         	$products = Product::where('taxonomy_id',$request->category_id)
+			->whereNotNull('approved')
 			->skip($request->offset)->take($request->length)
 			->orderBy('id','DESC')
 			->get();
