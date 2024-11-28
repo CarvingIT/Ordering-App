@@ -109,6 +109,14 @@ function ImagefileValidation(){
         </div>
 	<br />
 
+        <div class="col-span-4">
+	     <input type="checkbox" name="approved" value="1" 
+		@if ($product->approved) 
+			{{ 'checked' }}
+		@endif
+	     /> <label class="font-medium text-sm" for="product_name">Approval</label>
+        </div>
+
     </div>
     </div>
 
