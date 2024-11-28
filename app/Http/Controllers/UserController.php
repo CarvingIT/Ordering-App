@@ -79,13 +79,14 @@ class UserController extends Controller
         }
 
 	public function saveUserSellerRequest(Request $request){
+		//echo "SKK"; exit;
 		$user_roles = UserRole::where('user_id',auth()->user()->id)->first();
 		if(empty($user_roles)){
-		$seller_requests = UserSellerRequest::where('user_id',auth()->user()->id)
+			$seller_requests = UserSellerRequest::where('user_id',auth()->user()->id)
 				->where('status','0')
 				->get();
 		
-		if($seller_requests->isEmpty()){
+			if($seller_requests->isEmpty()){
 			$s_r = new UserSellerRequest;
 			$s_r->user_id = auth()->user()->id;
 			$s_r->status = 0;
@@ -107,15 +108,15 @@ class UserController extends Controller
                 		Session::flash('alert-danger', $e->getMessage());
 				}
          		}
-		}
-		else{
+			}
+			else{
 				if($request->is('api/*')){
                 		return response()->json(['MessageType'=>0, 'Message'=>'Request is already with us. The approval is Pending.'], 422);
         			}
 				else{
                 		Session::flash('alert-danger', 'Request is already with us. The approval is Pending.');
 				}
-		}
+			}
 		}
 		else{
 				if($request->is('api/*')){
@@ -166,7 +167,7 @@ class UserController extends Controller
 			$s_r = \App\Models\UserSellerRequest::where('user_id',$request_details->user_id)->first();
 			$s_r->status='1';
 			$s_r->save();
-			$role_name = 'Seller';
+			$role_name = 'seller';
 			$role = \App\Models\Role::where('name',$role_name)->first();
 			$role_id = $role->id;
 			$user = User::find($request_details->user_id);

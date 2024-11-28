@@ -20,12 +20,12 @@
                    @endif
                @endforeach
 		@if(auth()->user()->hasRole('admin'))
-			<strong>List of Requests for Seller Role</strong><br />
 			@php
 				$seller_requests = \App\Models\UserSellerRequest::where('status','0')->get();
 			@endphp
 
-				@if(!empty($seller_requests))
+				@if(!$seller_requests->isEmpty())
+			<strong>List of Requests for Seller Rolesss</strong><br />
                 			@foreach($seller_requests as $request_details)
 					{{ $request_details->user->name }}
 					<form name="user_seller_request" method="post" action="/admin/user/assignrole">
