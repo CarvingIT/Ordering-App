@@ -250,7 +250,7 @@ class ProductController extends Controller
                 if($product->delete()){
 			if($request->is('api/*')){
          			try{
-                		return response()->json(['MessageType'=>1, 'Message'=>'Product deleted successfully','product_id'=>$product_id], 200);
+                		return response()->json(['MessageType'=>1, 'Message'=>'Product deleted successfully'], 200);
          			}
          			catch(\Exception $e){
                         	return response()->json(['MessageType'=>0, 'Message'=> 'Please try again', 'error'=>$e->getMessage()], 422);
