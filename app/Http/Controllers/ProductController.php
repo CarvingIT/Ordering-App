@@ -248,8 +248,18 @@ class ProductController extends Controller
 		}
 		}
                 if($product->delete()){
-                Session::flash('alert-success', 'Product deleted successfully!');
-                return redirect('/admin/products');
+			if($request->is('api/*')){
+         			try{
+                		return response()->json(['MessageType'=>1, 'Message'=>'Product deleted successfully','product_id'=>$product_id], 200);
+         			}
+         			catch(\Exception $e){
+                        	return response()->json(['MessageType'=>0, 'Message'=> 'Please try again', 'error'=>$e->getMessage()], 422);
+	 			}
+			}
+			else{
+                		Session::flash('alert-success', 'Product deleted successfully!');
+                		return redirect('/admin/products');
+			}
                 }
           }
         }// function ends
