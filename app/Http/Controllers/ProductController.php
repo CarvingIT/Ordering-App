@@ -49,13 +49,15 @@ class ProductController extends Controller
         }// function ends
 
 	public function getCategoryProducts(Request $request){
+	$category = Taxonomy::find($request->category_id);
+	$category_name = $category->label;
 	if($request->is('api/*')){
         	$products = Product::where('taxonomy_id',$request->category_id)
 			->whereNotNull('approved')
 			->skip($request->offset)->take($request->length)
 			->orderBy('id','DESC')
 			->get();
-           	return response()->json(['MessageType'=>1, 'products'=>$products], 200);
+           	return response()->json(['MessageType'=>1, 'products'=>$products, 'category_name'=>$category_name], 200);
         }
         else{
         	$products = Product::where('taxonomy_id',$request->category_id)->get();
