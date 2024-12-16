@@ -13,8 +13,8 @@ $(document).ready(function() {
 		stateSave: true,
         	"scrollX": true,
 		columnDefs: [
-                        { width: '10%', targets: 0 },
-			{ "orderable": false, targets: 4 }
+                        { width: '20%', targets: 0 },
+			{ "orderable": false, targets: 6 }
                 ],
                 "lengthMenu": [ 100, 500, 1000 ],
                 "pageLength": 100,
@@ -98,7 +98,9 @@ $("#deletedialog").dialog({
                             <th>Product Name</th>
                             <th>Description</th>
                             <th>Seller</th>
+                            <th>Registered email</th>
                             <th>Category</th>
+                            <th>Approved</th>
                             <th class="text-right">Actions</th>
                             </tr>
                         </thead>
@@ -108,7 +110,9 @@ $("#deletedialog").dialog({
                         <td>{{ $p->product_name }}</td>
                         <td>{{ $p->description }}</td>
                         <td>{{ $p->seller->business_name }}</td>
+                        <td>{{ $p->seller->user->email }}</td>
                         <td>{{ $p->category->label }}</td>
+                        <td>@if(!empty($p->approved)) {{ $p->approved }} @else {{ __('Not Approved') }} @endif</td>
 			<td>
 				<a href="/admin/product/{{ $p->id }}" title="View Details"><span class="fas fa-eye"></span></a>
 				@if(Auth::user()->hasRole('admin'))

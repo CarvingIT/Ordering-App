@@ -65,8 +65,4 @@ class User extends Authenticatable
         return false;
     }
 	
-	public function seller(){
-		return $this->belongsTo(SellerProfile::class,'seller_id');
-	}
-
 }

@@ -13,10 +13,11 @@ $(document).ready(function() {
 		stateSave: true,
         	"scrollX": true,
 		columnDefs: [
-                        { width: '10%', targets: 0 },
-                        { width: '10%', targets: 1 },
-                        { width: '10%', targets: 2 },
-			{ "orderable": false, targets: 2 }
+                        { width: '30%', targets: 0 },
+                        { width: '20%', targets: 1 },
+                        { width: '30%', targets: 2 },
+                        { width: '10%', targets: 3 },
+			{ "orderable": false, targets: 3 }
                 ],
                 "lengthMenu": [ 100, 500, 1000 ],
                 "pageLength": 100,
@@ -100,14 +101,23 @@ $("#deletedialog").dialog({
                             <tr>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Seller Businesses</th>
                             <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach ($users as $u)
+				@php
+					$businesses = [];
+					foreach($u->sellers as $seller){
+						$businesses[] = $seller->business_name;	
+					}	
+					$business_names = implode(", ",$businesses); 
+				@endphp
                         <tr>
                         <td>{{ $u->name }}</td>
                         <td>{{ $u->email }}</td>
+                        <td>{{ $business_names }}</td>
 			<td>
 				<a href="/admin/people/{{ $u->id }}" title="View Details"><span class="fas fa-eye"></span></a>
 				@if(Auth::user()->hasRole('admin'))
