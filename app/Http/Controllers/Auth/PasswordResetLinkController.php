@@ -39,9 +39,18 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
+	if($request->is('api/*')){
+		if ($status == Password::RESET_LINK_SENT) {
+			return response()->json(['MessageType' => 1, 'Message' => 'Password reset link sent successfully'], 200);
+            	} else {
+                	return response()->json(['MessageType' => 0, 'Message' => 'Error sending password reset link'], 422);
+            	}
+	}
+	else{
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))
                     : back()->withInput($request->only('email'))
                             ->withErrors(['email' => __($status)]);
+	}
     }
 }

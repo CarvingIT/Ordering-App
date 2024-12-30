@@ -18,6 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/forgot-password', '\App\Http\Controllers\Auth\PasswordResetLinkController@store'); 
+
 Route::post('/user/register', '\App\Http\Controllers\UserController@register');
 Route::post('/user/get-token', '\App\Http\Controllers\UserController@login');
 Route::get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
