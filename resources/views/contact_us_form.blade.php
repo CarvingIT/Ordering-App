@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <!--x-application-logo class="w-20 h-20 fill-current text-gray-500" /-->
             </a>
         </x-slot>
 
@@ -25,7 +25,21 @@
                         </div>
                         <br />
 
+<style>
+	.block{
+	padding:2%;
+	}
+	h1{
+	color:blue;
+	font-size:18pt;
+	}
+</style>
 
+		<div style="padding:2%;">
+		<img src="/images/Go-Mata.jpeg" style="width:150px; margin-left:30%;">
+		</div>
+	<br />
+	<h1>For your query, please fill the form. </h1>
         <form method="POST" action="/product-query-save">
             @csrf
 		@php if(!empty($_GET['prod_id'])){ $prod_id = $_GET['prod_id'];}else{ $prod_id = 0; } @endphp
@@ -33,7 +47,7 @@
 
             <div>
                 <x-label for="text" :value="__('Topic')" />
-                <select id="name" class="block mt-5 w-full" name="topic" required autofocus />
+                <select id="name" class="block w-full" name="topic" required autofocus />
 			<option> Select The Topic </option>
 			<option value="Farming">Farming</option>
 			<option value="Utpad-production">Utpad/production</option>
