@@ -22,10 +22,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/product/{product_id}/loadimage/{photo_id}', '\App\Http\Controllers\ProductController@loadProductImage');
+
+Route::get('/product-query',function(){
+	return view('contact_us_form');
+});
+
+Route::post('/product-query-save/{prod_id?}','\App\Http\Controllers\MailController@notifyAdmin');
+
 Route::middleware(['auth'])->post('/save_user_seller_request', '\App\Http\Controllers\UserController@saveUserSellerRequest');
 
 Route::group(['prefix' => '/admin'], function(){
 	Route::group(['middleware' => 'admin'], function(){
+	Route::get('/sendmail','\App\Http\Controllers\MailController@sendMail');
+
 	Route::post('/user/assignrole', '\App\Http\Controllers\UserController@assignRole');
 		
 	//People/Users
