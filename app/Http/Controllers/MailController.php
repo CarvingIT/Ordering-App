@@ -44,20 +44,20 @@ class MailController extends Controller
 	}
 	
 	$product_contact_person = [
-			"Farming"=>"shraddha404@gmail.com",
-                        "Utpad-production"=>"shraddha404@gmail.com",
-                        "Terrace Garden"=>"shraddha404@gmail.com",
-                        "Urja-power"=>"shraddha404@gmail.com",
-                        "Sant sampark"=>"shraddha404@gmail.com",
-                        "Marketing"=>"shraddha404@gmail.com",
-                        "Goshala"=>"shraddha404@gmail.com",
-                        "Go chikitsa"=>"shraddha404@gmail.com",
-                        "Panchgvya chikitsa"=>"shraddha404@gmail.com",
-                        "Go pariksha"=>"shraddha404@gmail.com",
-                        "Nidhi-donation"=>"shraddha404@gmail.com",
-                        "Go katha"=>"shraddha404@gmail.com",
-                        "Woman interest"=>'shraddha404@gmail.com',
-                        "Other"=>'shraddha404@gmail.com'
+			"Farming"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Utpad-production"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Terrace Garden"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Urja-power"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Sant sampark"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Marketing"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Goshala"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Go chikitsa"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Panchgvya chikitsa"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Go pariksha"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Nidhi-donation"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Go katha"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Woman interest"=>"kolhapurjilhagausevaofficial@gmail.com",
+                        "Other"=>"kolhapurjilhagausevaofficial@gmail.com"
 		];
 
 	// Notify Admin about the new Contact Us form message
