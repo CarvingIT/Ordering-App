@@ -45,7 +45,7 @@ class MailController extends Controller
 	}
 	
 	$product_contact_person = [
-			"Farming"=>"shraddha404@gmail.com",
+			"Farming"=>"kolhapurjilhagausevaofficial@gmail.com",
                         "Utpad-production"=>"kolhapurjilhagausevaofficial@gmail.com",
                         "Terrace Garden"=>"kolhapurjilhagausevaofficial@gmail.com",
                         "Urja-power"=>"kolhapurjilhagausevaofficial@gmail.com",
