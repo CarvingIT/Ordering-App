@@ -33,7 +33,8 @@ class MailController extends Controller
         } #functions ends.
 
 	public function notifyAdmin(Request $request){
-
+	$product_id = '';
+	$product_name = 'General Query';
 	if(!empty($request->prod_id)){
 	$product_id = $request->prod_id;
 	$product_details = Product::find($product_id);
