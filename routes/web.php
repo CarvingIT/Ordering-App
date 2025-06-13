@@ -67,6 +67,14 @@ Route::group(['prefix' => '/admin'], function(){
         Route::post('/product/delete','\App\Http\Controllers\ProductController@deleteProduct');
 	Route::get('/category/{category_id}/products/{offset}/{length}', '\App\Http\Controllers\ProductController@getCategoryProducts');
 
+	//Events
+        Route::get('/events', '\App\Http\Controllers\EventController@index')->name('events');
+        Route::get('/event-form/{event_id}', '\App\Http\Controllers\EventController@addEditEvent');
+        Route::post('/saveevent', '\App\Http\Controllers\EventController@save');
+        Route::get('/event/{event_id}','\App\Http\Controllers\EventController@viewEvent');
+        Route::get('/event/{event_id}/eventIMG', '\App\Http\Controllers\EventController@eventImage');
+        Route::post('/event/delete', '\App\Http\Controllers\EventController@deleteEvent');
+
 	});
 });
 
