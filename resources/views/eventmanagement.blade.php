@@ -13,7 +13,7 @@ $(document).ready(function() {
 		stateSave: true,
                 "scrollX": true,
                 columnDefs: [
-                        { width: '20%', targets: 0 },
+                        { width: '10%', targets: 0 },
                         { "orderable": false, targets: 3 }
                 ],
                 "lengthMenu": [ 100, 500, 1000 ],
@@ -84,10 +84,12 @@ $("#deletedialog").dialog({
                @endforeach
 
 	        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-			<div class="text-right"><a title="New company" href="/admin/event-form/new"><span class="fas fa-plus"></span></a></div>
+			<div class="text-right">
+			<a title="New company" href="/admin/event-form/new"><span class="fas fa-plus"></span></a>
+			</div>
     			<div class="mt-6 text-gray-900">
 			<div class="table-responsive">
-                    <table id="events" class="display">
+                    <table id="events" class="display" style="width:100% !important;">
                         <thead class="text-primary">
                             <tr>
                             <th>Event Date</th>
