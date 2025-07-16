@@ -12,8 +12,8 @@ class EventController extends Controller
     //
 	public function index(Request $request){
 	if($request->is('api/*')){
-                $events = Event::whereNotNull('show_till')
-			->whereDate('show_till','>=',NOW())
+                $events = Event::whereNotNull('start_date')
+			->whereDate('start_date','>=',NOW())
                         ->skip($request->offset)->take($request->length)
                         ->orderBy('id','DESC')
                         ->get();
