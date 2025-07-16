@@ -75,6 +75,13 @@ Route::group(['prefix' => '/admin'], function(){
         Route::get('/event/{event_id}/eventIMG', '\App\Http\Controllers\EventController@eventImage');
         Route::post('/event/delete', '\App\Http\Controllers\EventController@deleteEvent');
 
+	//Announcements
+        Route::get('/announcements', '\App\Http\Controllers\AnnouncementController@index')->name('announcements');
+        Route::get('/announcement-form/{announcement_id}', '\App\Http\Controllers\AnnouncementController@addEditAnnouncement');
+        Route::post('/saveannouncement', '\App\Http\Controllers\AnnouncementController@save');
+        Route::get('/announcement/{announcement_id}','\App\Http\Controllers\AnnouncementController@viewAnnouncement');
+        Route::get('/announcement/{announcement_id}/announcementIMG', '\App\Http\Controllers\AnnouncementController@announcementImage');
+        Route::post('/announcement/delete', '\App\Http\Controllers\AnnouncementController@deleteAnnouncement');
 	});
 });
 

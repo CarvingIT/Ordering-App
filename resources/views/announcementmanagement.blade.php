@@ -8,13 +8,13 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#events").DataTable(
+	$("#announcements").DataTable(
 		{
 		stateSave: true,
                 "scrollX": true,
                 columnDefs: [
                         { width: '20%', targets: 0 },
-                        { "orderable": false, targets: 4 }
+                        { "orderable": false, targets: 3 }
                 ],
                 "lengthMenu": [ 100, 500, 1000 ],
                 "pageLength": 100,
@@ -49,9 +49,9 @@ $(document).ready(function() {
 //
 });
 
-function showDeleteDialog(event_id){
+function showDeleteDialog(announcement_id){
 
-$('#delete_event_id').val(event_id);
+$('#delete_announcement_id').val(announcement_id);
 $("#deletedialog").dialog({
 	title:'Are you sure?',
 	dialogClass: "alert"
@@ -84,40 +84,38 @@ $("#deletedialog").dialog({
                @endforeach
 
 	        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-			<div class="text-right"><a title="New company" href="/admin/event-form/new"><span class="fas fa-plus"></span></a></div>
+			<div class="text-right"><a title="New company" href="/admin/announcement-form/new"><span class="fas fa-plus"></span></a></div>
     			<div class="mt-6 text-gray-900">
 			<div class="table-responsive">
-                    <table id="events" class="display">
+                    <table id="announcements" class="display">
                         <thead class="text-primary">
                             <tr>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>Event Date</th>
                             <th>Title</th>
-                            <th>Description</th>
+                            <th>Announcement</th>
                             <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-			@foreach ($events as $event)
+			@foreach ($announcements as $announcement)
         		<tr>
-			<td>@php $date = strtotime($event->start_date); echo date('m/d/Y',$date); @endphp</td>
-			<td>@php $date = strtotime($event->end_date); echo date('m/d/Y',$date); @endphp</td>
-			<td>{{ $event->title }}</td>
-			<td>{{ \Illuminate\Support\Str::limit($event->description, 50, $end='...') }}</td>
+			<td>@php $date = strtotime($announcement->show_till); echo date('m/d/Y',$date); @endphp</td>
+			<td>{{ $announcement->title }}</td>
+			<td>{{ \Illuminate\Support\Str::limit($announcement->announcement, 50, $end='...') }}</td>
 			<td>
-				<a href="/admin/event/{{ $event->id }}"><span class="fas fa-eye" style="padding:5%;"></span></a>
-				<a href="/admin/event-form/{{ $event->id }}"><span class="fas fa-pencil-alt" style="padding:5%;"></span></a>
+				<a href="/admin/announcement/{{ $announcement->id }}"><span class="fas fa-eye" style="padding:5%;"></span></a>
+				<a href="/admin/announcement-form/{{ $announcement->id }}"><span class="fas fa-pencil-alt" style="padding:5%;"></span></a>
 
-				<button id="opener" onClick="showDeleteDialog({{ $event->id }});"><span class="fas fa-trash-alt"></span></button>
+				<button id="opener" onClick="showDeleteDialog({{ $announcement->id }});"><span class="fas fa-trash-alt"></span></button>
 
 	    <div id="deletedialog" style="display:none;" class="bg-grey">
-                <form name="deletedoc" method="post" action="/admin/event/delete">
+                <form name="deletedoc" method="post" action="/admin/announcement/delete">
                 @csrf
-                <input type="hidden" id="delete_event_id" name="event_id" value="{{ $event->id }}" />
+                <input type="hidden" id="delete_announcement" name="announcement" value="{{ $announcement->id }}" />
 			This action can not be undone.
 			<div class="flex items-center justify-end px-4 py-3 sm:px-6">
      			<button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled">Delete</button>
-     			<button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled" onclick="document.location='/admin/events';">Cancel</button>
+     			<button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 m-1" wire:loading.attr="disabled" onclick="document.location='/admin/announcements';">Cancel</button>
    			</div>
                 </form>
             </div>

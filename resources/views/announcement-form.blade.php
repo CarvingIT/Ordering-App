@@ -61,7 +61,7 @@ $( function() {
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-	@if(empty($event->id))
+	@if(empty($annuncement->id))
             {{ __('New Event') }}
 	@else
             {{ __('Edit Event') }}
@@ -74,8 +74,8 @@ $( function() {
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 	        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
     			<div class="mt-6 text-gray-500">
-				<form name="save-event" action="/admin/saveevent" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="event_id" value="{{ $event->id }}" />	
+				<form name="save-annuncement" action="/admin/saveannouncement" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="announcement_id" value="{{ $announcement->id }}" />	
 				<input type="hidden" name="referer" value="@php if(!empty($_SERVER['HTTP_REFERER'])){ echo $_SERVER['HTTP_REFERER'];} @endphp">
 				@csrf	
 <div class="overflow-hidden sm:rounded-md">
@@ -83,65 +83,21 @@ $( function() {
        <div class="grid grid-cols-6 gap-6">
 	<!-- Event Title -->
 	<div class="col-span-8">
-             <label class="block font-medium text-sm" for="event_title">Title</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="event_title" name="title" type="text" value="{{ $event->title }}" required>
+             <label class="block font-medium text-sm" for="annuncement">Title</label>
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="annuncement_title" name="title" type="text" value="{{ $announcement->title }}" required>
         </div>
 
 	<!-- Event Date -->
         <div class="col-span-1">
-             <label class="block font-medium text-sm" for="event_date">Event Start Date</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="datepickerstart" name="start_date" type="text" value="{{ $event->start_date }}" placeholder="YYYY-MM-DD" >
-        </div>
-	<!-- Event End Date -->
-        <div class="col-span-1">
-             <label class="block font-medium text-sm" for="event_end_date">Event End Date</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="datepickerend" name="end_date" type="text" value="{{ $event->end_date }}" placeholder="YYYY-MM-DD" >
+             <label class="block font-medium text-sm" for="announcement_date">Announcement Date</label>
+             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="datepickerstart" name="show_till" type="text" value="{{ $announcement->show_till }}" placeholder="YYYY-MM-DD" >
         </div>
 
-	<!-- Event Description -->
+	<!-- Announcement -->
 	<div class="col-span-8">
-             <label class="block font-medium text-sm" for="event_name">Description</label>
-             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="description" name="description" cols="8" rows="10">{{ $event->description }}</textarea>
+             <label class="block font-medium text-sm" for="Announcement">Announcement</label>
+             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="announcement" name="announcement" cols="8" rows="10">{{ $announcement->announcement }}</textarea>
         </div>
-
-	<!-- Event Venue -->
-	<!--
-	<div class="col-span-2">
-             <label class="block font-medium text-sm" for="event_venue">Event Venue</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="event_venue" name="event_venue" type="text" value="{{ $event->event_venue }}" >
-        </div>
-	-->
-
-	<!-- Key Sub Event -->
-	<!--
-	<div class="col-span-4">
-             <label class="block font-medium text-sm" for="key_sub_event">Key Sub Event</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="key_sub_event" name="key_sub_event" type="text" value="{{ $event->key_sub_event }}" >
-        </div>
-	-->
-
-	<!-- Event URL -->
-	<!--
-	<div class="col-span-8">
-             <label class="block font-medium text-sm" for="event_url">Event URL</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="event_url" name="event_url" type="text" value="{{ $event->event_url }}" >
-        </div>
-	-->
-
-	<!-- Event Image Upload -->
-	<!--
-        <div class="col-span-8 md:col-span-4">
-             <label class="block font-medium text-sm" for="event_image_upload">Event Image Upload @if(!empty($event->event_image_upload)) <a href="/admin/event/{{ $event->id }}/eventIMG" target="_blank" style="color:#F1541E;">{{ $event->event_image_upload_file }}</a> @endif</label>
-             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="event_image_upload" type="file" name="event_image_upload" @if(empty($event->id)) @endif>
-        </div>
-	-->
-
-	<!--
-        <div class="col-span-8 md:col-span-6">
-             <label class="block font-medium text-sm" for="event_notes">Description</label> 
-             <textarea class="form-input rounded-md shadow-sm mt-1 block w-full" id="event_notes" name="event_notes" type="text">{{ $event->event_notes }}</textarea>
-        </div>
-	-->
 
        </div>
     </div>

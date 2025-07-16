@@ -32,6 +32,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('/seller/{seller_id}','\App\Http\Controllers\SellerProfileController@viewSeller');
 	Route::post('/save_user_seller_request', '\App\Http\Controllers\UserController@saveUserSellerRequest');
 
+	//Announcements
+        Route::get('/announcements/{offset}/{length}', '\App\Http\Controllers\AnnouncementController@index');
+
 	//Events
         Route::get('/events/{offset}/{length}', '\App\Http\Controllers\EventController@index');
 });

@@ -49,9 +49,10 @@ class EventController extends Controller
             $e = Event::find($request->input('event_id'));
          }
          $referer = $request->input('referer');
-         $e->show_till = date('Y-m-d', strtotime($request->input('show_till')));
+         $e->start_date = date('Y-m-d', strtotime($request->input('start_date')));
+         $e->end_date = date('Y-m-d', strtotime($request->input('end_date')));
          $e->title = $request->input('title');
-         $e->announcement = $request->input('announcement');
+         $e->description = $request->input('description');
 
          try{
          $e->save();
